@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Huỳnh Quốc Tới - Personal Website</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #f5f6fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #273c75;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    header img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 3px solid #fff;
+    }
+    h1 { margin-bottom: 5px; }
+    h2 { color: #192a56; border-bottom: 2px solid #273c75; padding-bottom: 4px; }
+    section { padding: 20px 40px; background: white; margin: 20px auto; border-radius: 10px; max-width: 900px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    ul { list-style-type: none; padding-left: 0; }
+    li { margin-bottom: 8px; }
+    .btn {
+      background-color: #273c75;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover { background-color: #40739e; }
+    .notebook textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .notes-list {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .note {
+      background: #f0f0f0;
+      border-radius: 8px;
+      padding: 10px;
+      border-left: 4px solid #273c75;
+    }
+    footer {
+      background-color: #273c75;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+    a { color: #273c75; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="profile.jpg" alt="Huỳnh Quốc Tới's photo">
+    <h1>Huỳnh Quốc Tới</h1>
+    <p>Class of 2028 | Fulbright University Vietnam</p>
+  </header>
+
+  <section id="education">
+    <h2>Education</h2>
+    <ul>
+      <li><strong>High School:</strong> Hoang Le Kha High School for the Gifted, Tay Ninh — Major in Biology</li>
+      <li><strong>University:</strong> Fulbright University Vietnam</li>
+    </ul>
+  </section>
+
+  <section id="experience">
+    <h2>Professional Experience</h2>
+    <ul>
+      <li><strong>Tutor</strong>, The TutorX Vietnam Academy</li>
+      <li><strong>Organizer</strong>, <em>Youth For Impact</em> Summer Camp (under AIESEC Vietnam)</li>
+      <li><strong>Participant</strong>, <em>MASSP – Math and Science Summer Program</em>, Hanoi (2023, 2024)</li>
+      <li><strong>Co-founder & Organizer</strong>, <em>DSC – Debating Summer Camp for Tay Ninh Youth</em></li>
+      <li><strong>Master of Ceremonies (MC)</strong>, <strong>Voice Coach</strong>, and <strong>Independent Film Contributor</strong></li>
+    </ul>
+  </section>
+
+  <section id="achievements">
+    <h2>Achievements</h2>
+    <ul>
+      <li><strong>First Prize (Southern Region)</strong>, <em>UTE Architecture Innovation Contest 2023</em> — “Developing a 5x20m Alley House Model in Ho Chi Minh City Optimized for Sunlight Exposure”</li>
+      <li><strong>Second Prize</strong>, <em>STEMI Program 2023</em> — “Applying Alpha Waves for Psychological Relaxation Support among 10th-Grade Students at Hoang Le Kha High School for the Gifted”</li>
+      <li><strong>Second Prize (Provincial Level)</strong>, <em>Science and Engineering Fair 2021</em> — “Study on Forgetfulness Among Secondary Students and Proposed Solutions (Grade 9, Nguyen Tri Phuong Secondary School)”</li>
+      <li><strong>Second Prize (Provincial Level)</strong>, <em>Science and Engineering Fair 2024</em> — “Applying Artificial Intelligence to Support Drowning Prevention in Swimming Pools”</li>
+      <li><strong>Head of Events Department (2022–2023)</strong>, <em>Debate Fraternity Organization (DFO)</em> — a non-governmental debate organization</li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Information</h2>
+    <ul>
+      <li><strong>Work Email:</strong> <a href="mailto:quoctoi.work@gmail.com">quoctoi.work@gmail.com</a></li>
+      <li><strong>Academic Email:</strong> <a href="mailto:toi.huynh.240193@student.fulbright.edu.vn">toi.huynh.240193@student.fulbright.edu.vn</a></li>
+    </ul>
+  </section>
+
+  <section id="notebook" class="notebook">
+    <h2>Notebook</h2>
+    <p>Write your thoughts below and click <strong>Add Note</strong>. Notes will disappear when you refresh (session only).</p>
+    <textarea id="noteInput" rows="4" placeholder="Write your note here..."></textarea><br>
+    <button class="btn" id="addNoteBtn">Add Note</button>
+    <div id="noteError" style="color:red; margin-top:8px;"></div>
+    <div class="notes-list" id="notesList"></div>
+  </section>
+
+  <footer>
+    © 2025 Huỳnh Quốc Tới — Fulbright University Vietnam
+  </footer>
+
+  <script>
+    // Notebook feature
+    const addNoteBtn = document.getElementById('addNoteBtn');
+    const noteInput = document.getElementById('noteInput');
+    const notesList = document.getElementById('notesList');
+    const noteError = document.getElementById('noteError');
+
+    addNoteBtn.addEventListener('click', () => {
+      const text = noteInput.value.trim();
+      noteError.textContent = '';
+
+      if (!text) {
+        noteError.textContent = '⚠️ Please write something before adding a note.';
+        return;
+      }
+
+      const note = document.createElement('div');
+      note.className = 'note';
+      const time = new Date().toLocaleString();
+      note.innerHTML = `<strong>${time}</strong><br>${escapeHtml(text)}`;
+      notesList.prepend(note);
+      noteInput.value = '';
+    });
+
+    function escapeHtml(str) {
+      return str.replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;');
+    }
+  </script>
+
+</body>
+</html>
